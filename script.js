@@ -4,54 +4,48 @@ let score = 0;
 let userAnswers = [];
 let startTime = new Date();
 let timerInterval;
-let currentQuestions = [...questions]; // Questions filtrées
-let currentCategory = "all";
 
 // Statistiques
 let correctAnswersCount = 0;
 let incorrectAnswersCount = 0;
 
 // Éléments DOM
-const questionText = document.getElementById('questionText');
-const questionImage = document.getElementById('questionImage');
-const optionsContainer = document.getElementById('optionsContainer');
-const feedbackContainer = document.getElementById('feedbackContainer');
-const feedbackText = document.getElementById('feedbackText');
-const nextButton = document.getElementById('nextButton');
-const scoreElement = document.getElementById('score');
-const progressBar = document.getElementById('progressBar');
-const currentQuestionElement = document.getElementById('currentQuestion');
-const totalQuestionsElement = document.getElementById('totalQuestions');
-const restartButton = document.getElementById('restartButton');
-const timerElement = document.getElementById('timer');
-const resultMessage = document.getElementById('resultMessage');
-const resultsContainer = document.getElementById('resultsContainer');
-const quizMain = document.querySelector('.quiz-main');
-const categoryButtons = document.querySelectorAll('.category-btn');
-const chapterIndicator = document.getElementById('chapterIndicator');
-const chapterName = document.getElementById('chapterName');
-const questionNumber = document.getElementById('questionNumber');
-const hintButton = document.getElementById('hintButton');
-const helpModal = document.getElementById('helpModal');
-const closeModal = document.getElementById('closeModal');
-const restartQuizButton = document.getElementById('restartQuizButton');
-const showSummaryButton = document.getElementById('showSummaryButton');
-const summaryContainer = document.getElementById('summaryContainer');
-const summaryContent = document.getElementById('summaryContent');
-const backToResults = document.getElementById('backToResults');
-const correctCount = document.getElementById('correctCount');
-const incorrectCount = document.getElementById('incorrectCount');
-const finalScore = document.getElementById('finalScore');
-const finalTime = document.getElementById('finalTime');
-const percentageText = document.getElementById('percentageText');
-const percentageCircle = document.querySelector('.circle-progress');
-const quickCorrect = document.getElementById('quickCorrect');
-const quickIncorrect = document.getElementById('quickIncorrect');
+let questionText = document.getElementById('questionText');
+let questionImage = document.getElementById('questionImage');
+let optionsContainer = document.getElementById('optionsContainer');
+let feedbackContainer = document.getElementById('feedbackContainer');
+let feedbackText = document.getElementById('feedbackText');
+let nextButton = document.getElementById('nextButton');
+let scoreElement = document.getElementById('score');
+let progressBar = document.getElementById('progressBar');
+let currentQuestionElement = document.getElementById('currentQuestion');
+let totalQuestionsElement = document.getElementById('totalQuestions');
+let restartButton = document.getElementById('restartButton');
+let timerElement = document.getElementById('timer');
+let resultMessage = document.getElementById('resultMessage');
+let resultsContainer = document.getElementById('resultsContainer');
+let quizMain = document.querySelector('.quiz-main');
+let hintButton = document.getElementById('hintButton');
+let helpModal = document.getElementById('helpModal');
+let closeModal = document.getElementById('closeModal');
+let restartQuizButton = document.getElementById('restartQuizButton');
+let showSummaryButton = document.getElementById('showSummaryButton');
+let summaryContainer = document.getElementById('summaryContainer');
+let summaryContent = document.getElementById('summaryContent');
+let backToResults = document.getElementById('backToResults');
+let correctCount = document.getElementById('correctCount');
+let incorrectCount = document.getElementById('incorrectCount');
+let finalScore = document.getElementById('finalScore');
+let finalTime = document.getElementById('finalTime');
+let percentageText = document.getElementById('percentageText');
+let percentageCircle = document.querySelector('.circle-progress');
+let quickCorrect = document.getElementById('quickCorrect');
+let quickIncorrect = document.getElementById('quickIncorrect');
+let questionNumber = document.getElementById('questionNumber');
 
 // ===== INITIALISATION =====
 function initQuiz() {
     totalQuestionsElement.textContent = questions.length;
-    organizeQuestionsByCategory();
     startTimer();
     loadQuestion();
     
@@ -64,14 +58,6 @@ function initQuiz() {
     showSummaryButton.addEventListener('click', showSummary);
     backToResults.addEventListener('click', backToResultsHandler);
     
-    // Catégories
-    categoryButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const category = button.dataset.category;
-            selectCategory(category);
-        });
-    });
-    
     // Clic en dehors du modal pour fermer
     window.addEventListener('click', (e) => {
         if (e.target === helpModal) {
@@ -83,48 +69,16 @@ function initQuiz() {
     updateQuickStats();
 }
 
-// Organiser les questions par catégorie
-function organizeQuestionsByCategory() {
-    // Les questions sont déjà organisées par catégorie dans le tableau
-    currentQuestions = [...questions];
-}
-
-// Sélectionner une catégorie
-function selectCategory(category) {
-    currentCategory = category;
-    
-    // Mettre à jour les boutons actifs
-    categoryButtons.forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.category === category) {
-            btn.classList.add('active');
-        }
-    });
-    
-    // Filtrer les questions
-    if (category === 'all') {
-        currentQuestions = [...questions];
-    } else {
-        currentQuestions = questions.filter(q => q.category === category);
-    }
-    
-    // Redémarrer le quiz avec les nouvelles questions
-    restartQuiz();
-}
-
 // ===== FONCTIONS PRINCIPALES =====
 
 // Charger une question
 function loadQuestion() {
-    if (currentQuestionIndex >= currentQuestions.length) {
+    if (currentQuestionIndex >= questions.length) {
         endQuiz();
         return;
     }
     
-    const question = currentQuestions[currentQuestionIndex];
-    
-    // Mettre à jour l'indicateur de chapitre
-    updateChapterIndicator(question.category);
+    const question = questions[currentQuestionIndex];
     
     // Texte de la question
     questionText.textContent = question.question;
@@ -158,23 +112,6 @@ function loadQuestion() {
     updateProgress();
 }
 
-// Mettre à jour l'indicateur de chapitre
-function updateChapterIndicator(category) {
-    const categoryNames = {
-        "introduction": "Introduction et concepts de base",
-        "localisation": "Localisation de l'information génétique",
-        "mitose": "La mitose - Division cellulaire",
-        "cycle_cellulaire": "Cycle cellulaire et interphase",
-        "experiences": "Expériences historiques fondamentales",
-        "structure_adn": "Structure de la molécule d'ADN",
-        "chromosomes": "Chromosomes et organisation de la chromatine",
-        "replication": "Réplication semi-conservative de l'ADN",
-        "synthese": "Synthèse et applications"
-    };
-    
-    chapterName.textContent = categoryNames[category] || "Génétique";
-}
-
 // Sélectionner une option
 function selectOption(selectedIndex, element) {
     // Désactiver toutes les options
@@ -185,7 +122,7 @@ function selectOption(selectedIndex, element) {
     // Marquer la sélection
     element.classList.add('selected');
     
-    const question = currentQuestions[currentQuestionIndex];
+    const question = questions[currentQuestionIndex];
     const isCorrect = selectedIndex === question.correctAnswer;
     
     // Mettre à jour les statistiques
@@ -234,7 +171,7 @@ function selectOption(selectedIndex, element) {
 function nextQuestion() {
     currentQuestionIndex++;
     
-    if (currentQuestionIndex < currentQuestions.length) {
+    if (currentQuestionIndex < questions.length) {
         loadQuestion();
         
         // Scroll vers le haut
@@ -246,10 +183,10 @@ function nextQuestion() {
 
 // Mettre à jour la barre de progression
 function updateProgress() {
-    const progress = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
+    const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
     progressBar.style.width = `${progress}%`;
     currentQuestionElement.textContent = currentQuestionIndex + 1;
-    totalQuestionsElement.textContent = currentQuestions.length;
+    totalQuestionsElement.textContent = questions.length;
 }
 
 // Terminer le quiz
@@ -257,7 +194,7 @@ function endQuiz() {
     clearInterval(timerInterval);
     
     // Calculer le pourcentage
-    const percentage = (correctAnswersCount / currentQuestions.length) * 100;
+    const percentage = (correctAnswersCount / questions.length) * 100;
     const totalTime = Math.floor((new Date() - startTime) / 1000);
     const minutes = Math.floor(totalTime / 60);
     const seconds = totalTime % 60;
@@ -286,9 +223,9 @@ function endQuiz() {
     } else if (percentage >= 75) {
         message = "👍 Très bon travail ! Vous avez de très bonnes connaissances en génétique. Quelques révisions pour perfectionner.";
     } else if (percentage >= 60) {
-        message = "📚 Bon travail ! Vous avez compris les bases. Revoyez les chapitres où vous avez fait des erreurs.";
+        message = "📚 Bon travail ! Vous avez compris les bases. Revoyez les questions où vous avez fait des erreurs.";
     } else if (percentage >= 50) {
-        message = "📖 Assez bien ! Vous avez les notions de base. Il serait utile de réviser les chapitres difficiles.";
+        message = "📖 Assez bien ! Vous avez les notions de base. Il serait utile de réviser le cours attentivement.";
     } else if (percentage >= 30) {
         message = "💡 Des efforts sont nécessaires. Revoyez attentivement le cours PDF et refaites le quiz.";
     } else {
@@ -306,7 +243,7 @@ function showSummary() {
     summaryContent.innerHTML = '';
     
     userAnswers.forEach((answer, index) => {
-        const question = currentQuestions[index];
+        const question = questions[index];
         const summaryItem = document.createElement('div');
         summaryItem.className = `summary-item ${answer.isCorrect ? 'correct' : 'incorrect'}`;
         
@@ -353,11 +290,6 @@ function restartQuiz() {
     
     // Recréer le contenu principal du quiz
     const mainHTML = `
-        <!-- Indicateur de chapitre -->
-        <div class="chapter-indicator" id="chapterIndicator">
-            <i class="fas fa-bookmark"></i> <span id="chapterName">Introduction</span>
-        </div>
-
         <div class="question-container">
             <div class="question-number">
                 <span class="number-circle" id="questionNumber">1</span>
@@ -396,7 +328,7 @@ function restartQuiz() {
     
     quizMain.innerHTML = mainHTML;
     
-    // Réattacher les événements
+    // Réattacher les événements et références DOM
     setTimeout(() => {
         // Réinitialiser les références DOM
         questionText = document.getElementById('questionText');
@@ -405,8 +337,6 @@ function restartQuiz() {
         feedbackContainer = document.getElementById('feedbackContainer');
         feedbackText = document.getElementById('feedbackText');
         nextButton = document.getElementById('nextButton');
-        chapterIndicator = document.getElementById('chapterIndicator');
-        chapterName = document.getElementById('chapterName');
         questionNumber = document.getElementById('questionNumber');
         timerElement = document.getElementById('timer');
         
