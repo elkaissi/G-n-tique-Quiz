@@ -11,42 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="category-buttons" id="categoryButtons">
-        <h3><i class="fas fa-filter"></i> Catégories du Quiz :</h3>
-        <div class="categories-container">
-            <button class="category-btn active" data-category="all">
-                <i class="fas fa-th-list"></i> Toutes les questions
-            </button>
-            <button class="category-btn" data-category="introduction">
-                <i class="fas fa-book"></i> Introduction
-            </button>
-            <button class="category-btn" data-category="localisation">
-                <i class="fas fa-search-location"></i> Localisation
-            </button>
-            <button class="category-btn" data-category="mitose">
-                <i class="fas fa-divide"></i> Mitose
-            </button>
-            <button class="category-btn" data-category="cycle_cellulaire">
-                <i class="fas fa-sync-alt"></i> Cycle cellulaire
-            </button>
-            <button class="category-btn" data-category="experiences">
-                <i class="fas fa-flask"></i> Expériences
-            </button>
-            <button class="category-btn" data-category="structure_adn">
-                <i class="fas fa-dna"></i> Structure ADN
-            </button>
-            <button class="category-btn" data-category="chromosomes">
-                <i class="fas fa-project-diagram"></i> Chromosomes
-            </button>
-            <button class="category-btn" data-category="replication">
-                <i class="fas fa-copy"></i> Réplication
-            </button>
-            <button class="category-btn" data-category="synthese">
-                <i class="fas fa-brain"></i> Synthèse
-            </button>
-        </div>
-    </div>
-
     <div class="quiz-container">
         <!-- En-tête -->
         <header class="quiz-header">
@@ -56,7 +20,7 @@
                     <div>
                         <h1>Quiz de Génétique</h1>
                         <p class="subtitle">Unité 2 : Nature et mécanisme de l'expression de l'information génétique</p>
-                        <p class="professor">Prof. A.EL-KAISSI • Enseignant de SVT Cycle secondaire qualifiant</p>
+                        <p class="professor">Prof. A.EL-KAISSI • Lycée Qualifiant de Timoulay</p>
                     </div>
                 </div>
                 
@@ -74,11 +38,6 @@
 
         <!-- Zone de la question -->
         <main class="quiz-main">
-            <!-- Indicateur de chapitre -->
-            <div class="chapter-indicator" id="chapterIndicator">
-                <i class="fas fa-bookmark"></i> <span id="chapterName">Introduction</span>
-            </div>
-
             <div class="question-container">
                 <div class="question-number">
                     <span class="number-circle" id="questionNumber">1</span>
@@ -243,17 +202,17 @@
                     </div>
                 </div>
                 <div class="tip">
-                    <i class="fas fa-filter tip-icon"></i>
-                    <div>
-                        <h4>Filtres par catégorie</h4>
-                        <p>Utilisez les boutons en haut pour filtrer les questions par thème.</p>
-                    </div>
-                </div>
-                <div class="tip">
                     <i class="fas fa-chart-bar tip-icon"></i>
                     <div>
                         <h4>Suivi de progression</h4>
                         <p>Visualisez votre score et votre progression en temps réel.</p>
+                    </div>
+                </div>
+                <div class="tip">
+                    <i class="fas fa-clipboard-check tip-icon"></i>
+                    <div>
+                        <h4>30 questions</h4>
+                        <p>Ce quiz contient 30 questions couvrant l'ensemble du chapitre.</p>
                     </div>
                 </div>
             </div>
