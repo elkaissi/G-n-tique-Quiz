@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Génétique et Information Génétique</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="category-buttons" id="categoryButtons">
+        <h3><i class="fas fa-filter"></i> Catégories du Quiz :</h3>
+        <div class="categories-container">
+            <button class="category-btn active" data-category="all">
+                <i class="fas fa-th-list"></i> Toutes les questions
+            </button>
+            <button class="category-btn" data-category="introduction">
+                <i class="fas fa-book"></i> Introduction
+            </button>
+            <button class="category-btn" data-category="localisation">
+                <i class="fas fa-search-location"></i> Localisation
+            </button>
+            <button class="category-btn" data-category="mitose">
+                <i class="fas fa-divide"></i> Mitose
+            </button>
+            <button class="category-btn" data-category="cycle_cellulaire">
+                <i class="fas fa-sync-alt"></i> Cycle cellulaire
+            </button>
+            <button class="category-btn" data-category="experiences">
+                <i class="fas fa-flask"></i> Expériences
+            </button>
+            <button class="category-btn" data-category="structure_adn">
+                <i class="fas fa-dna"></i> Structure ADN
+            </button>
+            <button class="category-btn" data-category="chromosomes">
+                <i class="fas fa-project-diagram"></i> Chromosomes
+            </button>
+            <button class="category-btn" data-category="replication">
+                <i class="fas fa-copy"></i> Réplication
+            </button>
+            <button class="category-btn" data-category="synthese">
+                <i class="fas fa-brain"></i> Synthèse
+            </button>
+        </div>
+    </div>
+
+    <div class="quiz-container">
+        <!-- En-tête -->
+        <header class="quiz-header">
+            <div class="header-content">
+                <div class="title-section">
+                    <i class="fas fa-dna logo-icon"></i>
+                    <div>
+                        <h1>Quiz de Génétique</h1>
+                        <p class="subtitle">Unité 2 : Nature et mécanisme de l'expression de l'information génétique</p>
+                        <p class="professor">Prof. A.EL-KAISSI • Enseignant de SVT Cycle secondaire qualifiant</p>
+                    </div>
+                </div>
+                
+                <div class="progress-section">
+                    <div class="progress-info">
+                        <span id="progressText">Question <span id="currentQuestion">1</span>/<span id="totalQuestions">30</span></span>
+                        <span class="score-display"><i class="fas fa-star"></i> Score : <span id="score">0</span> points</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Zone de la question -->
+        <main class="quiz-main">
+            <!-- Indicateur de chapitre -->
+            <div class="chapter-indicator" id="chapterIndicator">
+                <i class="fas fa-bookmark"></i> <span id="chapterName">Introduction</span>
+            </div>
+
+            <div class="question-container">
+                <div class="question-number">
+                    <span class="number-circle" id="questionNumber">1</span>
+                    <div class="question-timer">
+                        <i class="fas fa-clock"></i> <span id="timer">00:00</span>
+                    </div>
+                </div>
+                
+                <h2 id="questionText">Chargement de la question...</h2>
+                <div id="questionImage" class="question-image"></div>
+            </div>
+
+            <!-- Options de réponse -->
+            <div class="options-container" id="optionsContainer">
+                <!-- Les options seront générées par JavaScript -->
+            </div>
+
+            <!-- Feedback -->
+            <div class="feedback-container" id="feedbackContainer">
+                <div class="feedback-header">
+                    <i class="fas fa-lightbulb feedback-icon"></i>
+                    <h3>Explication</h3>
+                </div>
+                <p id="feedbackText"></p>
+                <div class="feedback-footer">
+                    <div class="reference">
+                        <i class="fas fa-file-pdf"></i>
+                        <span id="referenceText">Référence au cours PDF</span>
+                    </div>
+                    <button id="nextButton" class="btn-next">
+                        Question suivante <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Score et résultats -->
+            <div class="results-container" id="resultsContainer" style="display: none;">
+                <div class="results-header">
+                    <i class="fas fa-trophy results-icon"></i>
+                    <h2>Quiz Terminé !</h2>
+                </div>
+                
+                <div class="results-stats">
+                    <div class="stat-card correct">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-value" id="correctCount">0</span>
+                            <span class="stat-label">Bonnes réponses</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card incorrect">
+                        <div class="stat-icon">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-value" id="incorrectCount">0</span>
+                            <span class="stat-label">Mauvaises réponses</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card score">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-value" id="finalScore">0</span>
+                            <span class="stat-label">Points obtenus</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card time">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-value" id="finalTime">00:00</span>
+                            <span class="stat-label">Temps total</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="results-message">
+                    <p id="resultMessage"></p>
+                    <div class="percentage-circle">
+                        <svg width="120" height="120">
+                            <circle class="circle-bg" cx="60" cy="60" r="54"></circle>
+                            <circle class="circle-progress" cx="60" cy="60" r="54"></circle>
+                        </svg>
+                        <span class="percentage-text" id="percentageText">0%</span>
+                    </div>
+                </div>
+                
+                <div class="results-actions">
+                    <button id="showSummaryButton" class="btn-summary">
+                        <i class="fas fa-list-alt"></i> Voir le récapitulatif
+                    </button>
+                    <button id="restartQuizButton" class="btn-restart">
+                        <i class="fas fa-redo"></i> Recommencer le quiz
+                    </button>
+                </div>
+            </div>
+
+            <!-- Récapitulatif -->
+            <div class="summary-container" id="summaryContainer" style="display: none;">
+                <h3><i class="fas fa-history"></i> Récapitulatif de vos réponses</h3>
+                <div id="summaryContent"></div>
+                <button id="backToResults" class="btn-back">
+                    <i class="fas fa-arrow-left"></i> Retour aux résultats
+                </button>
+            </div>
+        </main>
+
+        <!-- Pied de page -->
+        <footer class="quiz-footer">
+            <div class="footer-left">
+                <button id="restartButton" class="btn-restart-small">
+                    <i class="fas fa-redo"></i> Redémarrer
+                </button>
+                <button id="hintButton" class="btn-hint">
+                    <i class="fas fa-question-circle"></i> Aide
+                </button>
+            </div>
+            
+            <div class="footer-right">
+                <div class="quick-stats">
+                    <span class="stat">
+                        <i class="fas fa-check" style="color: #28a745;"></i>
+                        <span id="quickCorrect">0</span>
+                    </span>
+                    <span class="stat">
+                        <i class="fas fa-times" style="color: #dc3545;"></i>
+                        <span id="quickIncorrect">0</span>
+                    </span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modal d'aide -->
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-info-circle"></i> Comment utiliser ce quiz</h3>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="tip">
+                    <i class="fas fa-mouse-pointer tip-icon"></i>
+                    <div>
+                        <h4>Sélection des réponses</h4>
+                        <p>Cliquez sur une option pour sélectionner votre réponse.</p>
+                    </div>
+                </div>
+                <div class="tip">
+                    <i class="fas fa-lightbulb tip-icon"></i>
+                    <div>
+                        <h4>Explications détaillées</h4>
+                        <p>Après chaque réponse, une explication avec référence au PDF s'affiche.</p>
+                    </div>
+                </div>
+                <div class="tip">
+                    <i class="fas fa-filter tip-icon"></i>
+                    <div>
+                        <h4>Filtres par catégorie</h4>
+                        <p>Utilisez les boutons en haut pour filtrer les questions par thème.</p>
+                    </div>
+                </div>
+                <div class="tip">
+                    <i class="fas fa-chart-bar tip-icon"></i>
+                    <div>
+                        <h4>Suivi de progression</h4>
+                        <p>Visualisez votre score et votre progression en temps réel.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="questions.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
